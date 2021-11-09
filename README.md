@@ -1,5 +1,3 @@
-# begginer-blog
-
 ## Contributors 🧑👧
 
 - [GreccoOliva-Franco](https://github.com/GreccoOliva-Franco)
