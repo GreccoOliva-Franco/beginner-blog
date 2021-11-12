@@ -2,7 +2,7 @@ import { UsersEntity } from './../entities/user.entity';
 import { UserRepository } from './../repositories/user.repository';
 import { UserCreate, UserUpdate } from './../@types/users.type';
 import { getCustomRepository } from 'typeorm';
-import {ArrayUtils} from "../utils"
+import { ArrayUtils } from "../utils";
 export class UserService {
 	async create(user: UserCreate) {
 		try {
