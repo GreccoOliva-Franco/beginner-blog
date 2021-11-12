@@ -1,23 +1,30 @@
 import { UsersEntity } from './../entities/user.entity';
 import { UserRepository } from './../repositories/user.repository';
-import { UserCreate } from './../@types/users.type';
+import { UserCreate, UserUpdate } from './../@types/users.type';
 import { getCustomRepository } from 'typeorm';
+import {ArrayUtils} from "../utils"
 export class UserService {
 	async create(user: UserCreate) {
 		try {
 			const repository = getCustomRepository(UserRepository);
-			const User = new UsersEntity();
-			User.username = user.username;
-			User.password = user.password;
-			User.name = user.name;
-			User.lastName = user.lastName;
-			User.email = user.email;
-			User.profileImage = user.profileImage;
-			User.description = user.description;
-			const result = await repository.save(user);
+			const User = Object.assign(new UsersEntity(), user);
+            const result = await repository.save(User);
 			return result.userInfo;
 		} catch (error) {
 			throw new Error(`Error creating user: [${error}]`);
+		}
+	}
+
+	async update(user: UserUpdate) {
+		try {
+			const repository = getCustomRepository(UserRepository);
+			const userRegister = await repository.findByUsername(user.username);
+			const data = ArrayUtils.removeEmptyKeys(user);
+			const newUserRegister = Object.assign(userRegister, data);
+			const result = await repository.save(newUserRegister);
+			return result.userInfo;
+		} catch (error) {
+			throw new Error(`Error updating user: [${error}]`);
 		}
 	}
 }
