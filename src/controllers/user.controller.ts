@@ -34,6 +34,17 @@ class UserController {
 			data: service,
 		});
 	}
+
+	async delete(req: Request, res: Response) {
+		const { username } = req.body;
+		const result = await new UserService().delete(username);
+
+		return res.json({
+			message: "User deleted",
+			success: true,
+			data: result,
+		});
+	};
 }
 
 export default new UserController();

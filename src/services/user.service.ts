@@ -2,7 +2,7 @@ import { UsersEntity } from './../entities/user.entity';
 import { UserRepository } from './../repositories/user.repository';
 import { UserCreate, UserUpdate } from './../@types/users.type';
 import { getCustomRepository } from 'typeorm';
-import {ArrayUtils} from "../utils"
+import { ArrayUtils } from "../utils";
 export class UserService {
 	async create(user: UserCreate) {
 		try {
@@ -25,6 +25,15 @@ export class UserService {
 			return result.userInfo;
 		} catch (error) {
 			throw new Error(`Error updating user: [${error}]`);
+		}
+	}
+
+	async delete(username: string) {
+		try {
+			const repository = getCustomRepository(UserRepository);
+			await repository.deleteByUsername(username);
+		} catch (error) {
+			throw new Error(`There is no such user`);
 		}
 	}
 }
