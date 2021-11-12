@@ -19,3 +19,11 @@ export interface UserCreate {
 	profileImage: string;
 	description: string;
 }
+
+export interface UserUpdate {
+	username?: string,
+	name?: string;
+	lastName?: string;
+	profileImage?: string;
+	description?: string;
+}
