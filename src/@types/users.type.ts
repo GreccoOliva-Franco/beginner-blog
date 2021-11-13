@@ -1,13 +1,20 @@
-export interface User {
+export interface UserInfoBasic {
 	id: string;
 	username: string;
 	name: string;
 	lastName: string;
-	email: string;
 	profileImage: string;
 	description: string;
+}
+
+export interface UserInfoDetailed extends UserInfoBasic {
+	email: string;
 	createdAt: Date;
 	updatedAt: Date;
+}
+
+export interface UserInfoFull extends UserInfoDetailed {
+	password: string;
 }
 
 export interface UserCreate {
@@ -21,7 +28,7 @@ export interface UserCreate {
 }
 
 export interface UserUpdate {
-	username?: string,
+	username: string,
 	name?: string;
 	lastName?: string;
 	profileImage?: string;
