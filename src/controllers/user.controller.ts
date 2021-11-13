@@ -1,4 +1,4 @@
-import { UserCreate, UserUpdate } from './../@types/users.type';
+import { UserCreate, UserUpdate } from './../@types';
 import { Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 
