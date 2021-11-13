@@ -5,7 +5,7 @@ const routes = Router();
 
 routes
 	.post('/', userController.create)
-	.patch('/', userController.update);
-	// .delete('/', userController.delete);
+	.patch('/', userController.update)
+	.delete('/', userController.delete)
 
 export default routes;
