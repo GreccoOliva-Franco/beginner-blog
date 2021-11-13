@@ -4,27 +4,27 @@ import { UserCreate, UserInfoDetailed, UserUpdate, UserInfoBasic } from './../@t
 import { getCustomRepository } from 'typeorm';
 import { ArrayUtils } from "../utils";
 export class UserService {
-	async create(user: UserCreate) {
+	async create(user: UserCreate): Promise<UserInfoDetailed> {
 		try {
 			const repository = getCustomRepository(UserRepository);
 			const User = Object.assign(new UsersEntity(), user);
             const result = await repository.save(User);
-			return result.userInfo;
+			return result.userInfoDetailed;
 		} catch (error) {
-			throw new Error(`Error creating user: [${error}]`);
+			throw new Error(`Error creating user`);
 		}
 	}
 
-	async update(user: UserUpdate) {
+	async update(user: UserUpdate): Promise<UserInfoBasic> {
 		try {
 			const repository = getCustomRepository(UserRepository);
 			const userRegister = await repository.findByUsername(user.username);
 			const data = ArrayUtils.removeEmptyKeys(user);
 			const newUserRegister = Object.assign(userRegister, data);
 			const result = await repository.save(newUserRegister);
-			return result.userInfo;
+			return result.userInfoBasic;
 		} catch (error) {
-			throw new Error(`Error updating user: [${error}]`);
+			throw new Error(`Error updating user`);
 		}
 	}
 
