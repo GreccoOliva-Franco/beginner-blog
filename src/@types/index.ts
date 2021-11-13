@@ -1,5 +1,3 @@
-import { User } from './users.type';
+import { UserInfoBasic, UserInfoDetailed, UserInfoFull, UserCreate, UserUpdate } from './users.type';
 
-export {
-	  User,
-};
+export { UserInfoBasic, UserInfoDetailed, UserInfoFull, UserCreate, UserUpdate };
