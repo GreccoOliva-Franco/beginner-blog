@@ -1,6 +1,6 @@
 import { UsersEntity } from './../entities/user.entity';
 import { UserRepository } from './../repositories/user.repository';
-import { UserCreate, UserUpdate } from './../@types/users.type';
+import { UserCreate, UserInfoDetailed, UserUpdate, UserInfoBasic } from './../@types';
 import { getCustomRepository } from 'typeorm';
 import { ArrayUtils } from "../utils";
 export class UserService {
