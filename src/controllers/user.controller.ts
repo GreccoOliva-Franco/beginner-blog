@@ -35,12 +35,12 @@ class UserController {
 	async update(req: Request, res: Response) {
 		const { username, name, lastName, profileImage, description } = req.body;
 		const user: UserUpdate = { username, name, lastName, profileImage, description };
-		const service = await new UserService().update(user);
+		const userData = await new UserService().update(user);
 
 		return res.json({
 			message: 'User updated',
 			success: true,
-			data: service,
+			data: userData,
 		});
 	}
 
