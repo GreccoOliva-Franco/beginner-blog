@@ -36,14 +36,21 @@ class UserController {
 	}
 
 	async delete(req: Request, res: Response) {
-		const { username } = req.body;
-		const result = await new UserService().delete(username);
+		try {
+			const { userName } = req.params;
+			await new UserService().delete(userName);
 
 		return res.json({
 			message: "User deleted",
 			success: true,
-			data: result,
 		});
+		} catch (error) {
+			console.log(error);
+			return res.json({
+				message: "User doesn't exist",
+				success: false,
+			});
+		}
 	};
 }
 

@@ -6,6 +6,6 @@ const routes = Router();
 routes
 	.post('/', userController.create)
 	.patch('/', userController.update)
-	.delete('/', userController.delete);
+	.delete('/:userName', userController.delete);
 
 export default routes;

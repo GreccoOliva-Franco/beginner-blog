@@ -16,7 +16,7 @@ export class UserRepository extends Repository<UsersEntity> {
 
 	// Delete
 	async deleteByUsername(username: string): Promise<DeleteResult> {
-		const user = await this.delete({ username });
-		return user;
+		const user = await this.findOneOrFail({ username });
+		return this.softDelete(user);
 	}
 }
