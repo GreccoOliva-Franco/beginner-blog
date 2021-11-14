@@ -1,4 +1,5 @@
 import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { PostInfo, PostContent } from '../@types';
 
 @Entity('posts')
 export class PostsEntity {
@@ -29,8 +30,29 @@ export class PostsEntity {
 
 	@BeforeInsert()
 	SlugBuilder(): void {
-		const text: string = this.title.replace(/\s+/gi, "-").replace(/\W/g, "").toLowerCase();
+		const title: string = this.title.replace(/\s+/gi, "-").replace(/\W+/g, "").toLowerCase();
 		const date = String(new Date());
-		this.slug = text + "-" + date;
+		this.slug = title + "-" + date;
 	};
+
+	get postContent(): PostContent {
+		return {
+			id: this.id,
+			title: this.title,
+			slug: this.slug,
+			ownerId: this.ownerId,
+			content: this.content,
+			createdAt: this.createdAt,
+			updatedAt: this.updatedAt,
+		};
+	}
+
+	get postInfo(): PostInfo {
+		return {
+			id: this.id,
+			ownerId: this.ownerId,
+			createdAt: this.createdAt,
+			updatedAt: this.updatedAt,
+		};
+	}
 }
