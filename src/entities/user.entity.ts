@@ -1,6 +1,6 @@
 import { compareSync, genSaltSync, hashSync } from 'bcrypt';
 import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { User } from '../@types';
+import { UserInfoBasic, UserInfoDetailed, UserInfoFull } from '../@types';
 
 @Entity('users')
 export class UsersEntity {
@@ -48,11 +48,36 @@ export class UsersEntity {
         return compareSync(password, this.password);
     }
 
-
-	get userInfo(): User {
+	get userInfoBasic(): UserInfoBasic {
 		return {
 			id: this.id,
 			username: this.username,
+			name: this.name,
+			lastName: this.lastName,
+			profileImage: this.profileImage,
+			description: this.description,
+		};
+	}
+
+	get userInfoDetailed(): UserInfoDetailed {
+		return {
+			id: this.id,
+			username: this.username,
+			name: this.name,
+			lastName: this.lastName,
+			email: this.email,
+			profileImage: this.profileImage,
+			description: this.description,
+			createdAt: this.createdAt,
+			updatedAt: this.updatedAt,
+		};
+	}
+
+	get userInfoFull(): UserInfoFull {
+		return {
+			id: this.id,
+			username: this.username,
+			password: this.password,
 			name: this.name,
 			lastName: this.lastName,
 			email: this.email,

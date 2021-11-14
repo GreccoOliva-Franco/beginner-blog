@@ -6,8 +6,8 @@
     "ignore": [
         ".git",
         "node_modules/",
-        "dist/",
-        "coverage/"
+        "dist/"
     ],
-    "exec": "ts-node src/index.ts"
+    "exec": "etsc && ts-node src/index.ts",
+	"legacyWatch": true
 }
