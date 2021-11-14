@@ -3,6 +3,22 @@ import { Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 
 class UserController {
+	async get(req: Request, res: Response): UserInfoFull {
+		try {
+			const { username } = req.params;
+			const userData = await new UserService().get(username);
+			return {
+				message: "User found",
+				success: true,
+				data: userData,
+			};
+		} catch (error) {
+			return res.json({
+				message: "User does not exist",
+				success: false,
+			});
+		}
+	}
 	async create(req: Request, res: Response) {
 		try {
 			const { username, password, name, lastName, email, profileImage, description } = req.body;
