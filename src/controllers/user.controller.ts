@@ -3,15 +3,15 @@ import { Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 
 class UserController {
-	async get(req: Request, res: Response): UserInfoFull {
+	async get(req: Request, res: Response) {
 		try {
 			const { username } = req.params;
 			const userData = await new UserService().get(username);
-			return {
+			return res.json({
 				message: "User found",
 				success: true,
 				data: userData,
-			};
+			});
 		} catch (error) {
 			return res.json({
 				message: "User does not exist",
