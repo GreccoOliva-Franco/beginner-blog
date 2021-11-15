@@ -10,3 +10,16 @@ export interface PostContent extends PostInfo {
 	slug: string;
 	content: string;
 }
+
+export interface PostCreate {
+	title: string;
+	content: string;
+	ownerId: string;
+}
+
+export interface PostUpdate {
+	id: string;
+	ownerId: string;
+	title?: string;
+	content?: string;
+}
