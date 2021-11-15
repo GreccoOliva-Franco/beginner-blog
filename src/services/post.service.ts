@@ -5,6 +5,16 @@ import { getCustomRepository } from 'typeorm';
 import { ArrayUtils } from '../utils';
 
 export class PostService {
+	async get(postId: string): Promise<PostContent> {
+		try {
+			const repository = getCustomRepository(PostRepository);
+			const postRegister = await repository.findOneOrFail(postId);
+			return postRegister.postContent;
+		} catch (error) {
+			throw new Error(`Error getting post`);
+		}
+	}
+
 	async create(post: PostCreate): Promise<PostContent> {
 		try {
 			const repository = getCustomRepository(PostRepository);
