@@ -29,11 +29,17 @@ export class PostsEntity {
 	deletedAt: Date;
 
 	@BeforeInsert()
-	SlugBuilder(): void {
-		const title: string = this.title.replace(/\s+/gi, "-").replace(/\W+/g, "").toLowerCase();
-		const date = String(new Date());
-		this.slug = title + "-" + date;
-	};
+	slugify() {
+		this.slug = this.title
+							.toString()
+							.trim()
+							.toLowerCase()
+							.replace(/\s+/g, "-")
+							.replace(/[^\w-]+/g, "")
+							.replace(/--+/g, "-")
+							.replace(/^-+/, "")
+							.replace(/-+$/, "");
+	}
 
 	get postContent(): PostContent {
 		return {
