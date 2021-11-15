@@ -3,6 +3,24 @@ import { Request, Response } from 'express';
 import { PostService } from '../services/post.service';
 
 class PostController {
+	async get(req: Request, res: Response) {
+		try {
+			const { postId } = req.params;
+			const postData = await new PostService.get(postId);
+
+			return res.json({
+				message: "Post found",
+				success: true,
+				data: postData,
+			});
+		} catch (error) {
+			return res.json({
+				message: "Post does not exist",
+				success: false,
+			});
+		}
+	}
+
 	async create(req: Request, res: Response) {
 		try {
 			const { title, content, ownerId } = req.body;
