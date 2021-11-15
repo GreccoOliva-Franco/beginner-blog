@@ -1,5 +1,7 @@
 import { Request, Response, Router } from 'express';
-import users from './user.route';
+import usersRoutes from './user.route';
+import postsRoutes from './post.route';
+
 const routes = Router();
 
 routes.get('/', (request: Request, response: Response) => {
@@ -9,6 +11,7 @@ routes.get('/', (request: Request, response: Response) => {
 	});
 });
 
-routes.use('/users', users);
+routes.use('/users', usersRoutes);
+routes.use('/posts', postsRoutes);
 
 export default routes;
