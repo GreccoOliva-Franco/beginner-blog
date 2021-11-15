@@ -10,6 +10,9 @@ const {
 	DB_DATABASE,
 	JWT_KEY,
 	DB_TYPE,
+	SMTP_SERVICE,
+	SMTP_USER,
+	SMPT_PASS,
 } = process.env;
 
 export const config = {
@@ -27,5 +30,10 @@ export const config = {
 	  },
 	  jwt: {
 		    secret: JWT_KEY,
+	  },
+	  mailer: {
+		SMTP_SERVICE,
+		SMTP_USER,
+		SMPT_PASS,
 	  },
 };
