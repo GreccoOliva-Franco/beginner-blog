@@ -33,11 +33,11 @@ class PostController {
 				data: postData,
 			});
 		} catch (error) {
-			return {
+			return res.json({
 				message: "Post not created",
 				success: false,
 				error: error,
-			};
+			});
 		}
 	}
 
