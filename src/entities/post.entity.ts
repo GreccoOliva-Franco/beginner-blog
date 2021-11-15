@@ -30,7 +30,7 @@ export class PostsEntity {
 
 	@BeforeInsert()
 	slugify() {
-		this.slug = this.title
+		const text = this.title
 							.toString()
 							.trim()
 							.toLowerCase()
@@ -39,6 +39,23 @@ export class PostsEntity {
 							.replace(/--+/g, "-")
 							.replace(/^-+/, "")
 							.replace(/-+$/, "");
+		const date = String(Number(new Date()));
+		this.slug = text + "-" + date;
+	}
+
+	@BeforeUpdate()
+	slugifyUpdate() {
+		const text = this.title
+							.toString()
+							.trim()
+							.toLowerCase()
+							.replace(/\s+/g, "-")
+							.replace(/[^\w-]+/g, "")
+							.replace(/--+/g, "-")
+							.replace(/^-+/, "")
+							.replace(/-+$/, "");
+		const date = String(Number(new Date()));
+		this.slug = text + "-" + date;
 	}
 
 	get postContent(): PostContent {
