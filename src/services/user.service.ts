@@ -33,7 +33,6 @@ export class UserService {
 			const repository = getCustomRepository(UserRepository);
 			await repository.deleteByUsername(username);
 		} catch (error) {
-			console.log(error);
 			throw new Error(`There is no such user`);
 		}
 	}
