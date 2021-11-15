@@ -3,5 +3,5 @@ import { UserInfoBasic, UserInfoDetailed, UserInfoFull, UserCreate, UserUpdate }
 export { UserInfoBasic, UserInfoDetailed, UserInfoFull, UserCreate, UserUpdate };
 
 // Posts
-import { PostInfo, PostContent } from './posts.type';
-export { PostInfo, PostContent };
+import { PostInfo, PostContent, PostCreate, PostUpdate } from './posts.type';
+export { PostInfo, PostContent, PostCreate, PostUpdate };
