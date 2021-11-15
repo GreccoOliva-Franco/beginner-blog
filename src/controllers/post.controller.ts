@@ -6,7 +6,7 @@ class PostController {
 	async get(req: Request, res: Response) {
 		try {
 			const { postId } = req.params;
-			const postData = await new PostService.get(postId);
+			const postData = await new PostService().get(postId);
 
 			return res.json({
 				message: "Post found",
