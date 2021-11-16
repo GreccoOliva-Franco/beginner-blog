@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import express from 'express';
 import cors from 'cors';
-import routes from './routes';
+import apiRoutes from './routes';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import { typeOrmConfig } from './config/typeorm.config';
@@ -26,7 +26,7 @@ createConnection(typeOrmConfig)
 		app.use(cors());
 
 		// Register all application routes
-		app.use('/api/', routes);
+		app.use('/api/', apiRoutes);
 
 		app.listen(process.env.APP_PORT, () => {
 			console.log(`⚡️[server]: Server is running at ${config.api.url}`);

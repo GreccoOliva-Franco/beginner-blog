@@ -13,19 +13,19 @@ const {
 } = process.env;
 
 export const config = {
-	  api: {
+	api: {
 		url: APP_URL,
 		port: APP_PORT,
-	  },
-	  db: {
+	},
+	db: {
 		type: DB_TYPE as 'mysql' | 'mariadb',
 		host: DB_HOST,
 		port: DB_PORT,
 		username: DB_USERNAME,
 		password: DB_PASSWORD,
 		database: DB_DATABASE,
-	  },
-	  jwt: {
-		    secret: JWT_KEY,
-	  },
+	},
+	jwt: {
+		secret: JWT_KEY,
+	},
 };
