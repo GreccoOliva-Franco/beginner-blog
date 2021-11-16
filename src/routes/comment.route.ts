@@ -5,6 +5,8 @@ import { Router } from 'express';
 const routes = Router();
 
 routes
-	.post('/', commentController.create);
+	.get('/:id', commentController.get)
+	.post('/', commentController.create)
+	.delete('/:id', commentController.delete);
 
 export default routes;

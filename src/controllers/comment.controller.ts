@@ -3,6 +3,24 @@ import { CommentCreate } from "../@types";
 import { CommentService } from '../services/comment.service';
 
 class CommentController {
+	async get(req: Request, res: Response) {
+		try {
+			const { id } = req.params;
+			const commentData = await new CommentService().get(id);
+
+			return res.json({
+				message: "Comment found",
+				success: true,
+				data: commentData,
+			});
+		} catch (error) {
+			return res.json({
+				message: "Comment does not exist",
+				success: false,
+			});
+		}
+	}
+
 	async create(req: Request, res: Response) {
 		try {
 			const { userId, postId, content } = req.body;
@@ -17,6 +35,23 @@ class CommentController {
 		} catch (error) {
 			return res.json({
 				message: "Comment not created",
+				success: false,
+			});
+		}
+	}
+
+	async delete(req: Request, res: Response) {
+		try {
+			const { id } = req.params;
+			await new CommentService().delete(id);
+
+			return res.json({
+				message: "Comment deleted",
+				success: true,
+			});
+		} catch (error) {
+			return res.json({
+				message: "Error deleting comment",
 				success: false,
 			});
 		}
