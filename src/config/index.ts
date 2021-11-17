@@ -3,13 +3,16 @@ dotenv.config();
 const {
 	APP_URL,
 	APP_PORT,
+	DB_TYPE,
 	DB_HOST,
 	DB_PORT,
 	DB_USERNAME,
 	DB_PASSWORD,
 	DB_DATABASE,
 	JWT_KEY,
-	DB_TYPE,
+	SMTP_SERVICE,
+	SMTP_USER,
+	SMTP_PASSWORD,
 } = process.env;
 
 export const config = {
@@ -27,5 +30,10 @@ export const config = {
 	},
 	jwt: {
 		secret: JWT_KEY,
+	},
+	mailer: {
+		service: SMTP_SERVICE,
+		user: SMTP_USER,
+		password: SMTP_PASSWORD,
 	},
 };
