@@ -10,4 +10,5 @@ routes
 	.patch('/', [userUpdateSchemaValidate], userController.update)
 	.delete('/:username', userController.delete);
 
+
 export default routes;
