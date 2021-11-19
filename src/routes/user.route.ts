@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import userController from '../controllers/user.controller';
-import { userSchemaValidate } from '../validators/user.validator';
+import { userCreateSchemaValidate, userUpdateSchemaValidate } from '../validators/users/user.validator';
 
 const routes = Router();
 
 routes
 	.get('/:username', userController.get)
-	.post('/', [userSchemaValidate], userController.create)
-	.patch('/', userController.update)
+	.post('/', [userCreateSchemaValidate], userController.create)
+	.patch('/', [userUpdateSchemaValidate], userController.update)
 	.delete('/:username', userController.delete);
 
 export default routes;
