@@ -41,7 +41,7 @@ export class UserService {
 	async delete(username: string) {
 		try {
 			const repository = getCustomRepository(UserRepository);
-			await repository.deleteByUsername(username);
+			repository.deleteByUsername(username);
 		} catch (error) {
 			throw new Error(`There is no such user`);
 		}
