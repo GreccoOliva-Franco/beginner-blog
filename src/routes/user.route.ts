@@ -11,8 +11,4 @@ routes
 	.delete('/:username', userController.delete);
 
 
-
-
-	
-
 export default routes;
