@@ -3,10 +3,10 @@ import { Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 
 class UserController {
-	async get(req: Request, res: Response) {
+	async findOne(req: Request, res: Response) {
 		try {
 			const { username } = req.params;
-			const userData = await new UserService().get(username);
+			const userData = await new UserService().findOneByUsername(username);
 			return res.json({
 				message: "User found",
 				success: true,
@@ -19,6 +19,7 @@ class UserController {
 			});
 		}
 	}
+
 	async create(req: Request, res: Response) {
 		try {
 			const { username, password, name, lastName, email, profileImage, description } = req.body;
