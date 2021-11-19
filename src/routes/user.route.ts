@@ -5,7 +5,7 @@ import { userCreateSchemaValidate, userUpdateSchemaValidate } from '../validator
 const routes = Router();
 
 routes
-	.get('/:username', userController.get)
+	.get('/:username', userController.findOne)
 	.post('/', [userCreateSchemaValidate], userController.create)
 	.patch('/', [userUpdateSchemaValidate], userController.update)
 	.delete('/:username', userController.delete);

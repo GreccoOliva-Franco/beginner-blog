@@ -4,13 +4,23 @@ import { UserCreate, UserInfoDetailed, UserUpdate, UserInfoBasic } from './../@t
 import { getCustomRepository } from 'typeorm';
 import { ArrayUtils } from "../utils";
 export class UserService {
-	async get(username: string): Promise<UserInfoDetailed> {
+	async findOneByUsername(username: string): Promise<UserInfoDetailed> {
 		try {
 			const repository = getCustomRepository(UserRepository);
 			const userRegister = await repository.findByUsername(username);
 			return userRegister.userInfoFull;
 		} catch (error) {
 			throw new Error(`Error finding user`);
+		}
+	}
+
+	async findAll(): Promise<UserInfoBasic[]> {
+		try {
+			const repository = getCustomRepository(UserRepository);
+			const users = await repository.find();
+			return users.map(user => user.userInfoBasic);
+		} catch (error) {
+			throw new Error(`Error finding users`);
 		}
 	}
 
