@@ -9,21 +9,13 @@ interface SendMailOptions {
 	html: string;
 }
 
-const {
-	mailer: {
-		SMTP_SERVICE,
-		SMTP_USER,
-		SMPT_PASS,
-	},
-} = config;
-
 export async function SendMail(options: SendMailOptions) {
   const transporter = nodemailer.createTransport({
-    service: SMTP_SERVICE,
+    service: config.mailer.service,
     port: 587,
     auth: {
-	  user: SMTP_USER,
-      pass: SMPT_PASS,
+	  user: config.mailer.user,
+      pass: config.mailer.password,
     },
 });
 

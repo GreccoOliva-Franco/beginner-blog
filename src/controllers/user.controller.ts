@@ -40,12 +40,11 @@ class UserController {
 				data: userData,
 			});
 		} catch (error) {
-			console.log(error);
-			return {
+			return res.json({
 				message: "User not created",
 				success: false,
-				error: error,
-			};
+				error: error.message,
+			});
 		}
 	}
 

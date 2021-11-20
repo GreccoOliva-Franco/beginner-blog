@@ -1,8 +1,4 @@
-function buildMessage(field: string, property: string, value?: number): string {
-
-	function toCapitalCase(string: string): string {
-		return string[0].toUpperCase() + string.slice(1).toLowerCase();
-	};
+export function buildMessage(field: string, property: string, value?: number): string {
 
 	const message = {
 		required: `${toCapitalCase(field)} is required.`,
@@ -11,8 +7,9 @@ function buildMessage(field: string, property: string, value?: number): string {
 		min: `${toCapitalCase(field)} must be at least ${value} characters long.`,
 		max: `${toCapitalCase(field)} must be at most ${value} characters long.`,
 	};
-
 	return message[property];
 };
 
-export { buildMessage };
+function toCapitalCase(string: string): string {
+	return string[0].toUpperCase() + string.slice(1).toLowerCase();
+};

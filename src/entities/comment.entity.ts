@@ -7,13 +7,13 @@ export class CommentEntity {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column()
+	@Column({ type: 'varchar' })
 	userId: string;
 
-	@Column()
+	@Column({ type: 'varchar' })
 	postId: string;
 
-	@Column()
+	@Column({ type: 'varchar' })
 	content: string;
 
 	@CreateDateColumn()

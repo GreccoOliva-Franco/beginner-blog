@@ -25,6 +25,7 @@ const postCreateSchema = Joi.object({
 			'string.empty': messages.content.empty,
 			'string.min': messages.content.min,
 		}),
+	// TODO: REMOVE 'ownerId' WHEN AUTH IS IMPLEMENTED
 	ownerId: Joi
 		.string()
 		.required()
@@ -35,19 +36,10 @@ const postCreateSchema = Joi.object({
 });
 
 const postUpdateSchema = Joi.object({
-	id: Joi
-		.string()
-		.min(fields.id.min)
-		.max(fields.id.min)
-		.required()
-		.messages({
-			'any.required': messages.id.required,
-			'string.empty': messages.id.empty,
-		}),
 	title: Joi
 		.string()
 		.min(fields.title.min)
-		.max(fields.title.min)
+		.max(fields.title.max)
 		.messages({
 			'string.empty': messages.title.empty,
 			'string.min': messages.title.min,
@@ -59,6 +51,7 @@ const postUpdateSchema = Joi.object({
 		.messages({
 			'string.min': messages.content.min,
 		}),
+	// TODO: REMOVE 'ownerId' WHEN AUTH IS IMPLEMENTED
 	ownerId: Joi
 		.string()
 		.required()
