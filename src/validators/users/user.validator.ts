@@ -8,7 +8,7 @@ const userCreateSchema = Joi.object({
 	username: Joi
 		.string()
 		.min(fields.username.min)
-		.max(fields.username.min)
+		.max(fields.username.max)
 		.required()
 		.messages({
 			'any.required': messages.username.required,
