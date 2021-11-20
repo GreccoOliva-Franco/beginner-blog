@@ -1,15 +1,14 @@
-import { config } from './config';
 import 'reflect-metadata';
+import { config } from './config';
 import { createConnection } from 'typeorm';
 import express from 'express';
 import cors from 'cors';
 import apiRoutes from './routes';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import { typeOrmConfig } from './config/typeorm.config';
 
 // Try establish database connection
-createConnection(typeOrmConfig)
+createConnection()
 	.then(async () => {
 
 		// Init express app

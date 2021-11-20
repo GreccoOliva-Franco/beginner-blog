@@ -4,10 +4,14 @@ import { CommentContent, CommentCreate } from "../@types";
 
 
 export class CommentService {
+	private repository: CommentRepository;
+	constructor() {
+		this.repository = getCustomRepository(CommentRepository);
+	}
+
 	async get(commentId: string): Promise<CommentContent> {
 		try {
-			const repository = getCustomRepository(CommentRepository);
-			const commentRegister = await repository.findOneOrFail(commentId);
+			const commentRegister = await this.repository.findOneOrFail(commentId);
 
 			return commentRegister.commentContent;
 		} catch (error) {
@@ -17,9 +21,7 @@ export class CommentService {
 
 	async create(comment: CommentCreate): Promise<CommentContent> {
 		try {
-			const repository = getCustomRepository(CommentRepository);
-			const commentData = repository.save(comment);
-
+			const commentData = await this.repository.save(comment);
 			return commentData;
 		} catch (error) {
 			throw new Error(`Error creating comment`);
@@ -28,8 +30,7 @@ export class CommentService {
 
 	async delete(commentId: string) {
 		try {
-			const repository = getCustomRepository(CommentRepository);
-			await repository.softDelete({ id: commentId });
+			await this.repository.softDelete({ id: commentId });
 		} catch (error) {
 			throw new Error(`There is no such post`);
 		}

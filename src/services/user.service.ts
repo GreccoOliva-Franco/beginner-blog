@@ -4,21 +4,33 @@ import { UserCreate, UserInfoDetailed, UserUpdate, UserInfoBasic } from './../@t
 import { getCustomRepository } from 'typeorm';
 import { ArrayUtils } from "../utils";
 export class UserService {
-	async get(username: string): Promise<UserInfoDetailed> {
+	private repository: UserRepository;
+	constructor() {
+		this.repository = getCustomRepository(UserRepository);
+	}
+
+	async findOneByUsername(username: string): Promise<UserInfoDetailed> {
 		try {
-			const repository = getCustomRepository(UserRepository);
-			const userRegister = await repository.findByUsername(username);
+			const userRegister = await this.repository.findByUsername(username);
 			return userRegister.userInfoFull;
 		} catch (error) {
 			throw new Error(`Error finding user`);
 		}
 	}
 
+	async findAll(): Promise<UserInfoBasic[]> {
+		try {
+			const users = await this.repository.find();
+			return users.map(user => user.userInfoBasic);
+		} catch (error) {
+			throw new Error(`Error finding users`);
+		}
+	}
+
 	async create(user: UserCreate): Promise<UserInfoDetailed> {
 		try {
-			const repository = getCustomRepository(UserRepository);
 			const User = Object.assign(new UsersEntity(), user);
-            const result = await repository.save(User);
+            const result = await this.repository.save(User);
 			return result.userInfoDetailed;
 		} catch (error) {
 			throw new Error(`Error creating user`);
@@ -27,11 +39,10 @@ export class UserService {
 
 	async update(user: UserUpdate): Promise<UserInfoBasic> {
 		try {
-			const repository = getCustomRepository(UserRepository);
-			const userRegister = await repository.findByUsername(user.username);
+			const userRegister = await this.repository.findByUsername(user.username);
 			const data = ArrayUtils.removeEmptyKeys(user);
 			const newUserRegister = Object.assign(userRegister, data);
-			const result = await repository.save(newUserRegister);
+			const result = await this.repository.save(newUserRegister);
 			return result.userInfoBasic;
 		} catch (error) {
 			throw new Error(`Error updating user`);
@@ -40,8 +51,7 @@ export class UserService {
 
 	async delete(username: string) {
 		try {
-			const repository = getCustomRepository(UserRepository);
-			await repository.deleteByUsername(username);
+			this.repository.deleteByUsername(username);
 		} catch (error) {
 			throw new Error(`There is no such user`);
 		}

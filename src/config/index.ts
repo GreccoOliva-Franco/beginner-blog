@@ -1,5 +1,7 @@
 import dotenv from 'dotenv';
+
 dotenv.config();
+
 const {
 	APP_URL,
 	APP_PORT,
