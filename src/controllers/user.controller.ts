@@ -6,7 +6,8 @@ class UserController {
 	async findOne(req: Request, res: Response) {
 		try {
 			const { username } = req.params;
-			const userData = await new UserService().findOneByUsername(username);
+			console.log(req.user);
+			const userData = await new UserService().findByUsername(username);
 			return res.json({
 				message: "User found",
 				success: true,

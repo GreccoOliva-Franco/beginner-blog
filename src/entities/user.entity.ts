@@ -1,7 +1,8 @@
+import { Roles } from './../@types/users.type';
 import { RoleEntity } from './role.entity';
 import { compareSync, genSaltSync, hashSync } from 'bcrypt';
 import { BeforeInsert, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { UserInfoBasic, UserInfoDetailed, UserInfoFull } from '../@types';
+import { AuthPayload, UserInfoBasic, UserInfoDetailed, UserInfoFull } from '../@types';
 
 @Entity('users')
 export class UsersEntity {
@@ -39,13 +40,12 @@ export class UsersEntity {
 	@DeleteDateColumn()
 	deletedAt: Date;
 
-	@ManyToMany(() => RoleEntity, role => role.id)
-	@JoinTable({
-		name: 'user_role',
-		joinColumn: { name: 'user_id', referencedColumnName: 'id' },
-		inverseJoinColumn: { name: 'role_id', referencedColumnName: 'id' },
+	@ManyToOne(type => RoleEntity, role => role.users, {
+		cascade: true,
+		onDelete: 'CASCADE',
 	})
 	role: RoleEntity;
+
 
 	@BeforeInsert()
 	hashPassword(): void {
@@ -94,6 +94,18 @@ export class UsersEntity {
 			description: this.description,
 			createdAt: this.createdAt,
 			updatedAt: this.updatedAt,
+		};
+	}
+
+	get userJwtPayload(): AuthPayload {
+		 return {
+			id: this.id,
+			email: this.email,
+			name: this.name,
+			lastName: this.lastName,
+			profileImage: this.profileImage,
+			username: this.username,
+			role: this.role,
 		};
 	}
 }
