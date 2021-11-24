@@ -11,6 +11,6 @@
 	"env": {
 		"NODE_ENV": "development"
 	},
-    "exec": "etsc && ts-node src/index.ts",
+    "exec": "etsc && node ./dist/index.js",
 	"legacyWatch": true
 }

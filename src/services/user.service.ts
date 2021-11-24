@@ -9,10 +9,10 @@ export class UserService {
 		this.repository = getCustomRepository(UserRepository);
 	}
 
-	async findOneByUsername(username: string): Promise<UserInfoDetailed> {
+	async findByUsername(username: string): Promise<UserInfoBasic> {
 		try {
 			const userRegister = await this.repository.findByUsername(username);
-			return userRegister.userInfoFull;
+			return userRegister.userInfoBasic;
 		} catch (error) {
 			throw new Error(`Error finding user`);
 		}
