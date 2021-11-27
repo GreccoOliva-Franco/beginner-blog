@@ -3,10 +3,10 @@ import { Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 
 class UserController {
-	async get(req: Request, res: Response) {
+	async findOne(req: Request, res: Response) {
 		try {
 			const { username } = req.params;
-			const userData = await new UserService().get(username);
+			const userData = await new UserService().findByUsername(username);
 			return res.json({
 				message: "User found",
 				success: true,
@@ -17,34 +17,6 @@ class UserController {
 				message: "User does not exist",
 				success: false,
 			});
-		}
-	}
-	async create(req: Request, res: Response) {
-		try {
-			const { username, password, name, lastName, email, profileImage, description } = req.body;
-			const user: UserCreate = {
-				username,
-				password,
-				name,
-				lastName,
-				email,
-				profileImage,
-				description,
-			};
-			const userData = await new UserService().create(user);
-
-			return res.json({
-				message: 'User created',
-				success: true,
-				data: userData,
-			});
-		} catch (error) {
-			console.log(error);
-			return {
-				message: "User not created",
-				success: false,
-				error: error,
-			};
 		}
 	}
 

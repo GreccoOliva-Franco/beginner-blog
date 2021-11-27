@@ -1,30 +1,34 @@
-import { config } from './config';
 import 'reflect-metadata';
+import passport from 'passport';
+import './config/passport.config';
+import { config } from './config';
 import { createConnection } from 'typeorm';
 import express from 'express';
 import cors from 'cors';
 import apiRoutes from './routes';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import { typeOrmConfig } from './config/typeorm.config';
-
+import compression from 'compression';
 // Try establish database connection
-createConnection(typeOrmConfig)
+createConnection()
 	.then(async () => {
 
 		// Init express app
 		const app = express();
 		app.use(helmet());
 		app.use(morgan('dev'));
+		app.use(compression({
+			level: 9,
 
+		}));
 		app.use(
 			express.urlencoded({
 				extended: true,
 			}),
-			);
+		);
 		app.use(express.json());
 		app.use(cors());
-
+		app.use(passport.initialize());
 		// Register all application routes
 		app.use('/api/', apiRoutes);
 

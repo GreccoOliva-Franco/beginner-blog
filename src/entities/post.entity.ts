@@ -7,16 +7,16 @@ export class PostsEntity {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
-	@Column()
+	@Column({ type: 'varchar' })
 	title: string;
 
-	@Column()
+	@Column({ type: 'varchar' })
 	slug: string;
 
-	@Column()
+	@Column({ type: 'varchar' })
 	ownerId: string;
 
-	@Column()
+	@Column({ type: 'text' })
 	content: string;
 
 	@CreateDateColumn()
@@ -29,35 +29,24 @@ export class PostsEntity {
 	deletedAt: Date;
 
 	@BeforeInsert()
-	slugify() {
-		const text = this.title
-							.toString()
-							.trim()
-							.toLowerCase()
-							.replace(/\s+/g, "-")
-							.replace(/[^\w-]+/g, "")
-							.replace(/--+/g, "-")
-							.replace(/^-+/, "")
-							.replace(/-+$/, "");
-		const date = String(Number(new Date()));
-		this.slug = text + "-" + date;
-	}
-
 	@BeforeUpdate()
-	slugifyUpdate() {
-		const text = this.title
-							.toString()
-							.trim()
-							.toLowerCase()
-							.replace(/\s+/g, "-")
-							.replace(/[^\w-]+/g, "")
-							.replace(/--+/g, "-")
-							.replace(/^-+/, "")
-							.replace(/-+$/, "");
-		const date = String(Number(new Date()));
-		this.slug = text + "-" + date;
+	slugify() {
+		this.title = this.slugifyTitle(this.title);
 	}
 
+	slugifyTitle(title: string) {
+		const text = title
+			.toString()
+			.trim()
+			.toLowerCase()
+			.replace(/\s+/g, "-")
+			.replace(/[^\w-]+/g, "")
+			.replace(/--+/g, "-")
+			.replace(/^-+/, "")
+			.replace(/-+$/, "");
+		const date = String(Number(new Date()));
+		return text + "-" + date;
+	}
 	get postContent(): PostContent {
 		return {
 			id: this.id,

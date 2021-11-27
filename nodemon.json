@@ -8,6 +8,9 @@
         "node_modules/",
         "dist/"
     ],
-    "exec": "etsc && ts-node src/index.ts",
+	"env": {
+		"NODE_ENV": "development"
+	},
+    "exec": "etsc && node ./dist/index.js",
 	"legacyWatch": true
 }

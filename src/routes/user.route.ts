@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import userController from '../controllers/user.controller';
-import { userSchemaValidate } from '../validators/user.validator';
+import { isAuthenticated } from '../middleware/auth.middleware';
+import { userUpdateSchemaValidate } from '../validators/users/user.validator';
 
 const routes = Router();
 
 routes
-	.get('/:username', userController.get)
-	.post('/', [userSchemaValidate], userController.create)
-	.patch('/', userController.update)
+	.get('/:username', [isAuthenticated()], userController.findOne)
+	.patch('/', [userUpdateSchemaValidate], userController.update)
 	.delete('/:username', userController.delete);
+
 
 export default routes;
