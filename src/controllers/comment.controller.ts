@@ -3,6 +3,7 @@ import { CommentCreate } from "../@types";
 import { CommentService } from '../services/comment.service';
 
 class CommentController {
+
 	async get(req: Request, res: Response) {
 		try {
 			const { id } = req.params;

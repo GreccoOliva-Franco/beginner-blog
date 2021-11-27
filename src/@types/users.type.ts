@@ -34,3 +34,11 @@ export interface UserUpdate {
 	profileImage?: string;
 	description?: string;
 }
+
+// eslint-disable-next-line no-shadow
+export enum Roles {
+	ADMIN= 'ADMIN',
+	USER= 'USER',
+	WRITER= 'WRITER',
+	MODERATOR= 'MODERATOR',
+}

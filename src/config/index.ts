@@ -15,8 +15,11 @@ const {
 	SMTP_SERVICE,
 	SMTP_USER,
 	SMTP_PASSWORD,
+	JWT_EXPIRATION,
+	JWT_ALGORITHM,
+	AUTH_TYPE,
 } = process.env;
-
+import { Algorithm } from 'jsonwebtoken';
 export const config = {
 	api: {
 		url: APP_URL,
@@ -32,6 +35,11 @@ export const config = {
 	},
 	jwt: {
 		secret: JWT_KEY,
+		expiresIn: JWT_EXPIRATION,
+		algorithm: JWT_ALGORITHM as Algorithm,
+	},
+	auth:{
+		type: AUTH_TYPE,
 	},
 	mailer: {
 		service: SMTP_SERVICE,
