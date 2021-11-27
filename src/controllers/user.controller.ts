@@ -6,7 +6,6 @@ class UserController {
 	async findOne(req: Request, res: Response) {
 		try {
 			const { username } = req.params;
-			console.log(req.user);
 			const userData = await new UserService().findByUsername(username);
 			return res.json({
 				message: "User found",
@@ -17,34 +16,6 @@ class UserController {
 			return res.json({
 				message: "User does not exist",
 				success: false,
-			});
-		}
-	}
-
-	async create(req: Request, res: Response) {
-		try {
-			const { username, password, name, lastName, email, profileImage, description } = req.body;
-			const user: UserCreate = {
-				username,
-				password,
-				name,
-				lastName,
-				email,
-				profileImage,
-				description,
-			};
-			const userData = await new UserService().create(user);
-
-			return res.json({
-				message: 'User created',
-				success: true,
-				data: userData,
-			});
-		} catch (error) {
-			return res.json({
-				message: "User not created",
-				success: false,
-				error: error.message,
 			});
 		}
 	}
