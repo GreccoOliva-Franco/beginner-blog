@@ -11,6 +11,13 @@ import { CommentInfo, CommentContent, CommentCreate } from './comments.type';
 // Auth
 import { AuthPayload } from './auth.type';
 
+declare global {
+	namespace Express {
+		// eslint-disable-next-line @typescript-eslint/no-empty-interface
+		interface User extends AuthPayload{}
+	}
+}
+
 export {
 	// User
 	UserInfoBasic,
