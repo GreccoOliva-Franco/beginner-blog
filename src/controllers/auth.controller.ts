@@ -1,3 +1,5 @@
+import { UserService } from './../services/user.service';
+import { UserCreate } from './../@types/users.type';
 import { AuthUtil } from './../utils/auth.util';
 import { AuthService } from './../services/auth.service';
 import { Request, Response } from 'express';
@@ -24,6 +26,35 @@ class AuthController {
 			});
 		})(req, res);
 	};
+
+	async signin(req: Request, res: Response) {
+		try {
+			const { username, password, name, lastName, email, profileImage, description } = req.body;
+			const user: UserCreate = {
+				username,
+				password,
+				name,
+				lastName,
+				email,
+				profileImage,
+				description,
+			};
+			const userData = await new AuthService().signin(user);
+			const token = await new AuthUtil().bearerToken(userData);
+			return res.json({
+				message: 'User created',
+				success: true,
+				data: { ...token },
+			});
+		} catch (error) {
+			console.log(error);
+			return res.json({
+				message: "User not created",
+				success: false,
+				error: error.message,
+			});
+		}
+	}
 }
 
 export default new AuthController();

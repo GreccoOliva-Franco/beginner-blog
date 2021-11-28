@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { CommentContent, CommentInfo } from '../@types';
 
-@Entity('posts')
+@Entity('comments')
 export class CommentEntity {
 
 	@PrimaryGeneratedColumn('uuid')
