@@ -1,43 +1,46 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany } from 'typeorm';
 import { CommentContent, CommentInfo } from '../@types';
+import { PostsEntity } from './post.entity';
+import { UsersEntity } from './user.entity';
 
 @Entity('comments')
 export class CommentEntity {
 
-	@PrimaryGeneratedColumn('uuid')
-	id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-	@Column({ type: 'varchar' })
-	userId: string;
+  @Column({ type: 'varchar' })
+  content: string;
 
-	@Column({ type: 'varchar' })
-	postId: string;
+  @CreateDateColumn()
+  createdAt: Date;
 
-	@Column({ type: 'varchar' })
-	content: string;
+  @DeleteDateColumn()
+  deletedAt: Date;
 
-	@CreateDateColumn()
-	createdAt: Date;
+  @ManyToOne(() => PostsEntity, post => post.comments)
+  post: PostsEntity;
 
-	@DeleteDateColumn()
-	deletedAt: Date;
+  // user comments relations
+  @ManyToOne(() => UsersEntity, user => user.comments)
+  user: UsersEntity;
 
-	get commentContent(): CommentContent {
-		return {
-			id: this.id,
-			userId: this.userId,
-			postId: this.postId,
-			content: this.content,
-			createdAt: this.createdAt,
-		};
-	}
+  get commentContent(): CommentContent {
+    return {
+      id: this.id,
+      user: this.user,
+      post: this.post,
+      content: this.content,
+      createdAt: this.createdAt,
+    };
+  }
 
-	get commentInfo(): CommentInfo {
-		return {
-			id: this.id,
-			userId: this.userId,
-			postId: this.postId,
-			createdAt: this.createdAt,
-		};
-	}
+  get commentInfo(): CommentInfo {
+    return {
+      id: this.id,
+      user: this.user,
+      post: this.post,
+      createdAt: this.createdAt,
+    };
+  }
 }
