@@ -10,7 +10,6 @@ import {
 	UpdateDateColumn,
 	OneToMany,
 } from 'typeorm';
-import { RoutesProtectedEntity as RoutesProtected } from './routesProtected.entity';
 // eslint-disable-next-line no-shadow
 
 @Entity('roles')
@@ -35,8 +34,4 @@ export class RoleEntity {
 
 	@OneToMany(() => UsersEntity, (user) => user.role)
 	users: UsersEntity[];
-
-	@ManyToMany(() => RoutesProtected, (route) => route.roles)
-	@JoinTable({ name: 'roles_routes_protected' })
-	routes: RoutesProtected[];
 }

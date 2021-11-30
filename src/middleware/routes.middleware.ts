@@ -2,8 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import { Roles } from './../@types/users.type';
 export function protectByRole(roles: Roles[]) {
 	return (req: Request, res: Response, next: NextFunction) => {
-		// TODO: implement a database validation to check if the user has the right role to access the route
-		// const { method, baseUrl } = req;
 		const userRole = req.user.role.name as unknown as Roles;
 		if (userRole === Roles.ADMIN) {
 			return next();
