@@ -14,3 +14,8 @@ export interface CommentCreate {
 	postId: string;
 	content: string;
 }
+
+export interface CommentUpdate {
+	id: string,
+	content: string,
+}
