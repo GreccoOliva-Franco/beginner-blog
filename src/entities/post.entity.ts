@@ -1,70 +1,88 @@
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { PostInfo, PostContent } from '../@types';
+import { CommentEntity } from './comment.entity';
+import { UsersEntity } from './user.entity';
 
 @Entity('posts')
 export class PostsEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-	@PrimaryGeneratedColumn('uuid')
-	id: string;
+  @Column({ type: 'varchar' })
+  title: string;
 
-	@Column({ type: 'varchar' })
-	title: string;
+  @Column({ type: 'varchar' })
+  slug: string;
 
-	@Column({ type: 'varchar' })
-	slug: string;
+  @Column({ type: 'varchar' })
+  ownerId: string;
 
-	@Column({ type: 'varchar' })
-	ownerId: string;
+  @Column({ type: 'text' })
+  content: string;
 
-	@Column({ type: 'text' })
-	content: string;
+  @CreateDateColumn()
+  createdAt: Date;
 
-	@CreateDateColumn()
-	createdAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
 
-	@UpdateDateColumn()
-	updatedAt: Date;
+  @ManyToOne(() => UsersEntity, (user) => user.id)
+  user: UsersEntity;
 
-	@DeleteDateColumn()
-	deletedAt: Date;
+  @ManyToMany(() => CommentEntity, comment => comment.post)
+  comments: CommentEntity[];
 
-	@BeforeInsert()
-	@BeforeUpdate()
-	slugify() {
-		this.title = this.slugifyTitle(this.title);
-	}
+  @DeleteDateColumn()
+  deletedAt: Date;
 
-	slugifyTitle(title: string) {
-		const text = title
-			.toString()
-			.trim()
-			.toLowerCase()
-			.replace(/\s+/g, "-")
-			.replace(/[^\w-]+/g, "")
-			.replace(/--+/g, "-")
-			.replace(/^-+/, "")
-			.replace(/-+$/, "");
-		const date = String(Number(new Date()));
-		return text + "-" + date;
-	}
-	get postContent(): PostContent {
-		return {
-			id: this.id,
-			title: this.title,
-			slug: this.slug,
-			ownerId: this.ownerId,
-			content: this.content,
-			createdAt: this.createdAt,
-			updatedAt: this.updatedAt,
-		};
-	}
+  @BeforeInsert()
+  @BeforeUpdate()
+  slugify() {
+    this.title = this.slugifyTitle(this.title);
+  }
 
-	get postInfo(): PostInfo {
-		return {
-			id: this.id,
-			ownerId: this.ownerId,
-			createdAt: this.createdAt,
-			updatedAt: this.updatedAt,
-		};
-	}
+  slugifyTitle(title: string) {
+    const text = title
+      .toString()
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]+/g, '')
+      .replace(/--+/g, '-')
+      .replace(/^-+/, '')
+      .replace(/-+$/, '');
+    const date = String(Number(new Date()));
+    return text + '-' + date;
+  }
+  get postContent(): PostContent {
+    return {
+      id: this.id,
+      title: this.title,
+      slug: this.slug,
+      ownerId: this.ownerId,
+      content: this.content,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
+
+  get postInfo(): PostInfo {
+    return {
+      id: this.id,
+      ownerId: this.ownerId,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
 }
