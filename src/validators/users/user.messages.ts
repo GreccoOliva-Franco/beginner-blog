@@ -18,13 +18,13 @@ const messages = {
 		required: buildMessage('name', 'required'),
 		empty: buildMessage('name', 'empty'),
 		min: buildMessage('name', 'min', fields.name.min),
-		max: buildMessage('name', 'min', fields.name.max),
+		max: buildMessage('name', 'max', fields.name.max),
 	},
 	lastName: {
 		required: buildMessage('last name', 'required'),
 		empty: buildMessage('last name', 'empty'),
 		min: buildMessage('last name', 'min', fields.lastName.min),
-		max: buildMessage('last name', 'min', fields.lastName.max),
+		max: buildMessage('last name', 'max', fields.lastName.max),
 	},
 	email: {
 		required: buildMessage('email', 'required'),
