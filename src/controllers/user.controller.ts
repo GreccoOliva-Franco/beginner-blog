@@ -3,18 +3,37 @@ import { Request, Response } from 'express';
 import { UserService } from '../services/user.service';
 
 class UserController {
+	async createUser(req: Request, res: Response) {
+		try {
+			const { username, password, name, lastName, email, profileImage, description } = req.body;
+			const user = { username, password, name, lastName, email, profileImage, description };
+
+			const newUser = await new UserService().create(user);
+			res.json({
+				message: 'User created',
+				success: true,
+				data: newUser,
+			});
+		} catch (error) {
+			res.json({
+				message: 'Error creating user',
+				success: false,
+			});
+		}
+	}
+
 	async findOne(req: Request, res: Response) {
 		try {
 			const { username } = req.params;
 			const userData = await new UserService().findByUsername(username);
 			return res.json({
-				message: "User found",
+				message: 'User found',
 				success: true,
 				data: userData,
 			});
 		} catch (error) {
 			return res.json({
-				message: "User does not exist",
+				message: 'User does not exist',
 				success: false,
 			});
 		}
@@ -38,7 +57,7 @@ class UserController {
 			await new UserService().delete(username);
 
 			return res.json({
-				message: "User deleted",
+				message: 'User deleted',
 				success: true,
 			});
 		} catch (error) {
@@ -47,8 +66,8 @@ class UserController {
 				message: "User doesn't exist",
 				success: false,
 			});
-		};
-	};
+		}
+	}
 }
 
 export default new UserController();
